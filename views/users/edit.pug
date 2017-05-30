@@ -1,0 +1,22 @@
+extend ../base.pug
+
+block heading-left
+	span User details
+
+block heading-right
+	div(class="pull-right")
+		span Welcome back, #{foundUser.username}
+		form(action="/users/logout" method="POST" class="navbar-form navbar-right")
+			button(type="submit" class="btn btn-default") log out
+block content
+	div(class="container")
+		div(class="row")
+			div(class="col-xs-6 col-xs-offset-3")
+				form(action=`/users/${foundUser.id}?_method=PATCH` method="POST")
+					div(class="form-group")
+						input(type="text" name="username" class="form-control" value=`${foundUser.username}`)
+					div(class="form-group")
+						input(type="text" name="email" class="form-control" value=`${foundUser.email}`)
+					button(type="submit" class="btn btn-default") Edit details
+				form(action=`/users/${foundUser.id}?_method=DELETE` method="POST")
+					button(type="submit" class="btn btn-default") Delete user

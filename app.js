@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var userRoutes = require('./routes/users-routes');
 var session = require('cookie-session');
 var fs = require('fs');
+var flash = require('connect-flash');
 
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
@@ -15,12 +16,19 @@ app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(session({secret:process.env.SECRET_KEY}));
+app.use(flash());
 
 app.get('/', function(req,res) {
 	res.redirect('/users/login');
 });
 
 app.use('/users', userRoutes);
+
+// send flash messages to all routes
+app.use(function(req, res, next) {
+  res.locals.message = req.flash('message');
+  next();
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
