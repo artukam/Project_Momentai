@@ -1,5 +1,9 @@
 .navbar-momentai {
-	background-color:#4D7F48;
+	background-color:#257F7E;
 	padding-top:20px;
 	padding-bottom:20px;
+}
+
+.navbar-momentai .navbar-toggle .icon-bar {
+    background-color:white;
 }
