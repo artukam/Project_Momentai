@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+	meta(charset="UTF-8")
+	title Document
+	link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous")
+	link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous")
+	link(rel="stylesheet" href="/css/style.css")
+body
+	div(class='container-fluid')
+		div(class='row')
+			div(class='col-xs-2 task-side-bar') I am a side bar
+			div(class='col-xs-6 col-xs-offset-1 main-task-area')
+					h1 
+						small Task list
+
+					ul(class="list-group")
+						for task in currentUser.tasks
+							if task.isActive 
+								li(class="task-item list-group-item" id=`task_${task._id}`)
+									table(class="table borderless")
+										tr
+											td(class="borderless col-xs-1")
+												form(class="form form-inline complete-task-form")
+													input(type="hidden" name="user_id" value=`${currentUser._id}`)
+													input(type="hidden" name="task_id" value=`${task._id}`)
+													button(type="submit" class="check-button" id=`${task._id}` data=`${task._id}`)
+											td(class="borderless col-xs-7") #{task.task}
+											td(class="borderless col-xs-3") #{task.isDue}
+											td(class="borderless col-xs-1")
+												a(class="edit-toggle" id=`${task._id}`) edit
+								li(class="task-item-edit list-group-item" id=`form_${task._id}`)
+									form(class="form form-inline edit-task-form" action=`/users/${currentUser._id}/tasks/${task._id}?_method=PATCH` method="POST")
+										div(class="form-group")
+											input(type="text" name="task" value=`${task.task}`)
+										div(class="form-group")
+											input(type="date" name="isDue" value=`${task.date}`)
+										button(type="submit" class="btn btn-default") edit task
+									form(class="form form-inline delete-task-form" action=`/users/${currentUser._id}/tasks/${task._id}?_method=DELETE` method="POST")
+										button(type="submit" class="btn btn-danger") delete task
+									a(class="cancel-toggle pull-right" id=`${task._id}`) cancel edit
+		
+					a(class="add-toggle") add task
+
+					form(class="form form-inline add-task-form" action=`/users/${currentUser._id}/tasks/new` method="POST")
+						div(class="form-group")
+							input(type="text" name="task" placeholder="insert task here")
+						div(class="form-group")
+							input(type="date" name="isDue")
+						button(type="submit" class="btn btn-default") add task
+						a(class="cancel-add-toggle") cancel
+
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")
+	script(src="/js/style.js")

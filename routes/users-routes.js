@@ -2,10 +2,50 @@ var express = require('express');
 var router = express.Router({mergeParams: true});
 var db = require('../models');
 var authMiddleware = require('../middleware/auth');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+//PASSPORT
+passport.use(new LocalStrategy(
+	{
+		usernameField: 'username',
+		passwordField: 'password',
+		passReqToCallback: true
+	},
+
+	function verifyCallback(req, username, password, done) {
+		db.User.findOne({username: username}, function(err,user) {
+			if (err) {
+				return done(err);
+			}
+			if (!user) {
+				return done(null,false);
+			}
+			user.comparePassword(password, function(err, isMatch) {
+				if(isMatch) {
+					return done(null,user);
+				} else {
+					return done(null,false);
+				}
+			})
+		})
+	}
+
+	));
+
+passport.serializeUser(function(user,done) {
+	done(null, user.id);
+})
+
+passport.deserializeUser(function(id,done) {
+	db.User.findById(id).then(function(user){
+		done(null,user);
+	});
+});
 
 //INDEX
 router.get('/index', authMiddleware.loginRequired, function(req,res,next){
-	db.User.findOne({_id: req.session.user_id}).then(function(user){
+	db.User.findOne({_id: req.session.passport.user}).then(function(user){
 		let currentUser = user;
 		res.render('users/index', {currentUser})
 	})
@@ -24,26 +64,12 @@ router.post('/signup', function(req,res,next){
 })
 
 //LOGIN USER
-router.post('/login', function(req,res,next){
-	db.User.findOne({username: req.body.username}).then(function(user){
-		user.comparePassword(req.body.password, function(err, isMatch){
-			if(isMatch) {
-				req.session.user_id = user.id;
-				req.flash('message', 'logged in!');
-				res.redirect('/users/index');
-			} else {
-				req.flash('message','invalid credentials!');
-				res.redirect('/users/login');
-			}
-		})
-	}, function(err) {
-		res.send(err);
-	})
-})
+router.post('/login',
+			passport.authenticate('local', {successRedirect: '/users/index' , failureRedirect: '/users/login'}));
 
 //LOGOUT USER
 router.post('/logout', function(req,res,next){
-	req.session.user_id = null;
+	req.logout();
 	req.flash('message', 'logged out!');
 	res.redirect('/users/login');
 })
@@ -77,7 +103,7 @@ router.delete('/:id', function(req,res,next){
 	db.User.findByIdAndRemove(req.params.id).then(function(data){
 		req.session.user_id = null;
 		req.flash('message', 'user deleted');
-		res.redirect('/users/login');
+		res.redirect('users/login');
 	})
 })
 

@@ -1,0 +1,22 @@
+extends ../base_task.pug
+
+block content
+	h1 
+		small Task list
+
+	ul(class="list-group")
+		for task in currentUser.tasks
+			li(class="task-item list-group-item")
+				table(class="table borderless")
+					tr
+						td(class="borderless") Active
+						td(class="borderless") #{task.task}
+						td(class="borderless") #{task.isDue}
+
+	form(class="form form-inline add-task-form" action=`/users/${currentUser._id}/tasks/new` method="POST")
+		div(class="form-group")
+			input(type="text" name="task" placeholder="insert task here")
+		div(class="form-group")
+			input(type="date" name="isDue")
+		button(type="submit" class="btn btn-default") add task
+				

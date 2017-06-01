@@ -2,8 +2,8 @@ extend ../base.pug
 
 block heading-right
 	div(class="pull-right")
-		span Welcome back, #{foundUser.username}
 		form(action="/users/logout" method="POST" class="navbar-form navbar-right")
+			label(class="label-greeting") Welcome back, #{foundUser.username}
 			button(type="submit" class="btn btn-default") log out
 block content
 	div(class="container")

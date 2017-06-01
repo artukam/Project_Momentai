@@ -6,9 +6,11 @@ var methodOverride = require('method-override');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var userRoutes = require('./routes/users-routes');
+var taskRoutes = require('./routes/tasks-routes');
 var session = require('cookie-session');
 var fs = require('fs');
 var flash = require('connect-flash');
+var passport = require('passport');
 
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
@@ -16,6 +18,8 @@ app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(session({secret:process.env.SECRET_KEY}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 app.get('/', function(req,res) {
@@ -23,6 +27,7 @@ app.get('/', function(req,res) {
 });
 
 app.use('/users', userRoutes);
+app.use('/users/:user_id/tasks', taskRoutes);
 
 // send flash messages to all routes
 app.use(function(req, res, next) {

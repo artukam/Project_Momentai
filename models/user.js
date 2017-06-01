@@ -15,7 +15,11 @@ var userSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true,
-	}
+	},
+	tasks: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Task'
+	}]
 })
 
 userSchema.pre('save', function(next) {

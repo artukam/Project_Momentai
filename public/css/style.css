@@ -7,3 +7,82 @@
 .navbar-momentai .navbar-toggle .icon-bar {
     background-color:white;
 }
+
+.label-greeting{
+	padding-right:20px;
+	padding-left:30px;
+	color:white;
+}
+
+.task-side-bar {
+	height:100vh;
+	background-color:#257F7E;
+	color:white;
+}
+
+.borderless td, .borderless th, .table>tbody>tr>td {
+    border: none;
+    border-top: none;
+}
+
+.task-item{
+	display:show;
+}
+
+.task-item-edit{
+	display:none;
+	list-style:none;
+}
+
+.task-item-edit .list-group-item form{
+	display:inline;
+}
+.task-item-edit .list-group-item div{
+	display:inline;
+}
+.task-item-edit .list-group-item input{
+	display:inline;
+}
+.task-item-edit .list-group-item button{
+	display:inline;
+}
+.edit-toggle{
+	cursor:pointer;
+}
+
+.cancel-toggle{
+	cursor:pointer;
+}
+
+.edit-task-form {
+	display:inline;
+}
+
+.delete-task-form{
+	display:inline;
+}
+
+.add-toggle{
+	cursor:pointer;
+}
+
+.add-task-form{
+	display:none;
+}
+
+.cancel-add-toggle{
+	cursor:pointer;
+}
+
+.check-button {
+	border-radius: 1.5em;
+	height: 1.5em;
+	width: 1.5em;
+	background-color: #FFFFFF;
+	border-color:#c9c9c9;
+	box-shadow: none;
+}
+
+.check-button:hover {
+	background-color: #E8E7E8;
+}
