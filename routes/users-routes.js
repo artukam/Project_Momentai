@@ -47,7 +47,7 @@ passport.deserializeUser(function(id,done) {
 router.get('/index', authMiddleware.loginRequired, function(req,res,next){
 	db.User.findOne({_id: req.session.passport.user}).then(function(user){
 		let currentUser = user;
-		res.redirect(`/users/${user.id}/tasks`)
+		res.redirect(`/users/${user.id}/lists`)
 	})
 })
 

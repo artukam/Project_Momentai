@@ -5,6 +5,7 @@ window.onload = function() {
 	let cancelAddListToggle = $(".cancel-add-list-toggle")
 	let todoListGroup = $(".todo-list-group")
 	let editListToggle = $(".edit-list-form-toggle")
+	let editListForm = $(".edit-list-form")
 	let deleteListForm = $(".delete-list-form")
 	
 	//Task variables
@@ -57,6 +58,25 @@ window.onload = function() {
 		listText.toggle();
 	})
 
+	//List -edit list
+	editListForm.on("submit", function(event) {
+		event.preventDefault();
+		let userId = $(event.target)[0].children.user_id.value;
+		let listValue = $(event.target)[0].children.listName.value;
+		let listId = $(event.target)[0].children.list_id.value;
+		$.ajax({
+			type:"PATCH",
+			url: `/users/${userId}/lists/${listId}`,
+			data: {listName: listValue},
+		}).then(function(res){
+			console.log("list name edited")
+			let listText = $(`#list_${listId}`);
+			let listForm = $(`#form_${listId}`);
+			listText.text(`${listValue}`)
+			listForm.toggle();
+			listText.toggle();
+		})
+	})
 	//List - delete list
 	deleteListForm.on("submit", function(event) {
 		event.preventDefault();

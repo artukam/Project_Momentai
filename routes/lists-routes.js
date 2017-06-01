@@ -3,7 +3,13 @@ var router = express.Router({mergeParams: true});
 var db = require('../models');
 var authMiddleware = require('../middleware/auth');
 
-//INDEX/NEW/SHOW - not required - all handled at the task level
+//INDEX/NEW/SHOW
+router.get('/', authMiddleware.loginRequired, function(req,res,next) {
+	db.User.findOne({_id: req.session.passport.user}).populate('tasks lists').exec().then(function(user) {
+		let currentUser = user;
+		res.render('task_home',{currentUser});
+	})
+})
 
 //CREATE
 router.post('/new', function(req, res, next){
@@ -20,6 +26,12 @@ router.post('/new', function(req, res, next){
 })
 
 //PATCH
+router.patch('/:id', function(req, res, next) {
+	db.List.findByIdAndUpdate(req.params.id, req.body).then(function(list) {
+		res.sendStatus(200);
+	})
+})
+
 
 //DELETE
 router.delete('/:id', function(req, res, next) {
