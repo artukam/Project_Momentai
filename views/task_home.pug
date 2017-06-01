@@ -9,7 +9,13 @@ head
 body
 	div(class='container-fluid')
 		div(class='row')
-			div(class='col-xs-2 task-side-bar') I am a side bar
+			div(class='col-xs-2 task-side-bar')
+				div
+					img(class="img-responsive center-image" src="/img/dummy_thumbnail.png")
+				div(class="text-center")
+					h4(class="text-center")
+						small(class="label-greeting") Welcome back, #{currentUser.username}
+					a(class="text-center label-greeting" href=`/users/${currentUser._id}`) (user settings)
 			div(class='col-xs-6 col-xs-offset-1 main-task-area')
 					h1 
 						small Task list

@@ -86,3 +86,7 @@
 .check-button:hover {
 	background-color: #E8E7E8;
 }
+
+.center-image {
+	margin: 0 auto;
+}
