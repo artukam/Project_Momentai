@@ -19,6 +19,10 @@ var userSchema = new mongoose.Schema({
 	tasks: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Task'
+	}],
+	lists: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'List'
 	}]
 })
 

@@ -9,13 +9,41 @@ head
 body
 	div(class='container-fluid')
 		div(class='row')
-			div(class='col-xs-2 task-side-bar')
+			div(class='col-xs-3 task-side-bar')
 				div
 					img(class="img-responsive center-image" src="/img/dummy_thumbnail.png")
 				div(class="text-center")
 					h4(class="text-center")
 						small(class="label-greeting") Welcome back, #{currentUser.username}
 					a(class="text-center label-greeting" href=`/users/${currentUser._id}`) (user settings)
+				hr
+				div(class="user-lists")
+					h4
+						small(class="label-greeting") To-do lists
+					ul(class="list-group todo-list-group")
+						for list in currentUser.lists
+							li(class="list-group-item to-do-list-li" id=`list_${list._id}`) #{list.listName}
+								a(class="edit-list-form-toggle pull-right" id=`${list._id}`) (edit)
+							li(class="list-group-item to-do-list-edit to-do-list-li" id=`form_${list._id}`)
+								form(class="form form-inline edit-list-form" action="#" method="POST")
+									input(type="text" name="listName" value=`${list.listName}`)
+									input(type="hidden" name="user_id" value=`${currentUser._id}`)
+									input(type="hidden" name="list_id" value=`${list._id}`)
+									button(type="submit" class="btn btn-default btn-xs") edit list
+								form(class="form form-inline delete-list-form" action="#" method="POST")
+									input(type="hidden" name="user_id" value=`${currentUser._id}`)
+									input(type="hidden" name="list_id" value=`${list._id}`)
+									button(type="submit" class="btn btn-danger btn-xs") delete list
+								a(class="edit-list-form-toggle pull-right" id=`${list._id}`) (cancel)
+
+					hr
+				div(class="add-lists-form")
+					a(class="add-list-form-toggle") add new list
+					form(class="form form-inline add-list-form" action="#" method="POST")
+						input(type="text" name="listName" placeholder="enter list name")
+						input(type="hidden" name="user_id" value=`${currentUser._id}`)
+						button(type="submit" class="btn btn-default btn-xs") add list
+						button(type="button" class="btn btn-danger cancel-add-list-toggle btn-xs") cancel
 			div(class='col-xs-6 col-xs-offset-1 main-task-area')
 					h1 
 						small Task list
@@ -40,7 +68,7 @@ body
 										div(class="form-group")
 											input(type="text" name="task" value=`${task.task}`)
 										div(class="form-group")
-											input(type="date" name="isDue" value=`${task.date}`)
+											input(type="date" name="isDue" value=`${task.isDue}`)
 										button(type="submit" class="btn btn-default") edit task
 									form(class="form form-inline delete-task-form" action=`/users/${currentUser._id}/tasks/${task._id}?_method=DELETE` method="POST")
 										button(type="submit" class="btn btn-danger") delete task

@@ -6,10 +6,14 @@ var taskSchema = new mongoose.Schema({
 		type: Boolean,
 		default: true
 	},
-	isDue: Date,
+	isDue: String,
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
+	},
+	list: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'List'
 	}
 })
 

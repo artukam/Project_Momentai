@@ -7,6 +7,7 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var userRoutes = require('./routes/users-routes');
 var taskRoutes = require('./routes/tasks-routes');
+var listRoutes = require('./routes/lists-routes');
 var session = require('cookie-session');
 var fs = require('fs');
 var flash = require('connect-flash');
@@ -27,6 +28,7 @@ app.get('/', function(req,res) {
 });
 
 app.use('/users', userRoutes);
+app.use('/users/:user_id/lists', listRoutes);
 app.use('/users/:user_id/tasks', taskRoutes);
 
 // send flash messages to all routes

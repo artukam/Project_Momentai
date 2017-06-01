@@ -5,7 +5,7 @@ var authMiddleware = require('../middleware/auth');
 
 //INDEX / NEW / SHOW
 router.get('/', authMiddleware.loginRequired, function(req,res,next) {
-	db.User.findOne({_id: req.session.passport.user}).populate('tasks').exec().then(function(user) {
+	db.User.findOne({_id: req.session.passport.user}).populate('tasks lists').exec().then(function(user) {
 		let currentUser = user;
 		res.render('task_home',{currentUser});
 	})
@@ -41,6 +41,14 @@ router.delete('/:id', function(req,res,next){
 			req.flash('message', 'task deleted')
 			res.redirect(`/users/${user.id}/tasks`)
 		})
+	})
+})
+
+//COMPLETE
+router.patch('/:id/complete', function(req,res,next){
+	db.Task.findByIdAndUpdate(req.params.id, { isActive: false }).then(function(task){
+		req.flash('message', 'task completed')
+		res.sendStatus(200);
 	})
 })
 module.exports = router;

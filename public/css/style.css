@@ -1,3 +1,11 @@
+form {
+	display:inline;
+}
+
+input{
+	color:black;
+}
+
 .navbar-momentai {
 	background-color:#257F7E;
 	padding-top:20px;
@@ -15,7 +23,7 @@
 }
 
 .task-side-bar {
-	height:100vh;
+	min-height:100vh;
 	background-color:#257F7E;
 	color:white;
 }
@@ -89,4 +97,31 @@
 
 .center-image {
 	margin: 0 auto;
+}
+
+.to-do-list-li{
+	background-color:#257F7E;
+	border:none;
+}
+
+.add-list-form-toggle{
+	color:white;
+	cursor:pointer;
+}
+
+.add-list-form{
+	display:none;
+}
+
+.edit-list-form-toggle{
+	color:white;
+	cursor:pointer;
+}
+
+.to-do-list-edit{
+	display:none;
+}
+
+.todo-list-group {
+	list-style-type:none;
 }

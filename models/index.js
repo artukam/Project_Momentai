@@ -6,3 +6,4 @@ mongoose.Promise = Promise;
 
 module.exports.User = require("./user");
 module.exports.Task = require("./task");
+module.exports.List = require("./list");
