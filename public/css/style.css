@@ -6,6 +6,10 @@ input{
 	color:black;
 }
 
+.navbar{
+	margin-bottom:0px;
+}
+
 .navbar-momentai {
 	background-color:#257F7E;
 	padding-top:20px;
@@ -14,6 +18,29 @@ input{
 
 .navbar-momentai .navbar-toggle .icon-bar {
     background-color:white;
+}
+
+.parallax { 
+	    padding-top:100px;
+	    background-image: url("/img/desk_bg.jpg");
+	    height: 800px; 
+	    background-attachment: fixed;
+	    background-position: center;
+	    background-repeat: no-repeat;
+	    background-size: cover;
+}
+
+.head-tag-line{
+	color:white;
+}
+
+.sign-up-header{
+	color:white;
+	padding-top:20px;
+}
+
+.emphasis-word{
+	color:#E532B9;
 }
 
 .label-greeting{
