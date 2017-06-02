@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var taskSchema = new mongoose.Schema({
-	task: String,
+	taskName: String,
 	isActive: {
 		type: Boolean,
 		default: true

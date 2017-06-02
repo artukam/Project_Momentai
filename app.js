@@ -29,7 +29,7 @@ app.get('/', function(req,res) {
 
 app.use('/users', userRoutes);
 app.use('/users/:user_id/lists', listRoutes);
-app.use('/users/:user_id/tasks', taskRoutes);
+app.use('/users/:user_id/lists/:list_id/tasks', taskRoutes);
 
 // send flash messages to all routes
 app.use(function(req, res, next) {

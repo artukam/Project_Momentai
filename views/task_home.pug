@@ -45,45 +45,83 @@ body
 						button(type="submit" class="btn btn-default btn-xs") add list
 						button(type="button" class="btn btn-danger cancel-add-list-toggle btn-xs") cancel
 			div(class='col-xs-6 col-xs-offset-1 main-task-area')
-					h1 
-						small Task list
-
-					ul(class="list-group")
-						for task in currentUser.tasks
-							if task.isActive 
-								li(class="task-item list-group-item" id=`task_${task._id}`)
-									table(class="table borderless")
-										tr
-											td(class="borderless col-xs-1")
-												form(class="form form-inline complete-task-form")
-													input(type="hidden" name="user_id" value=`${currentUser._id}`)
-													input(type="hidden" name="task_id" value=`${task._id}`)
-													button(type="submit" class="check-button" id=`${task._id}` data=`${task._id}`)
-											td(class="borderless col-xs-7") #{task.task}
-											td(class="borderless col-xs-3") #{task.isDue}
-											td(class="borderless col-xs-1")
-												a(class="edit-toggle" id=`${task._id}`) edit
-								li(class="task-item-edit list-group-item" id=`form_${task._id}`)
-									form(class="form form-inline edit-task-form" action=`/users/${currentUser._id}/tasks/${task._id}?_method=PATCH` method="POST")
-										div(class="form-group")
-											input(type="text" name="task" value=`${task.task}`)
-										div(class="form-group")
+					for list in currentUser.lists
+						h2
+							small #{list.listName}
+						//- tasks for each list
+						ul(class="list-group todo-task-group" id=`tasklist_${list._id}`)
+							for task in list.tasks
+								if task.isActive
+									li(class="task-item list-group-item" id=`task_item_${task._id}`) 
+										table(class="table borderless")
+											tr
+												td(class="borderless col-xs-1")
+													form(class="form form-inline complete-task-form")
+														input(type="hidden" name="user_id" value=`${currentUser._id}`)
+														input(type="hidden" name="list_id" value=`${list._id}`)
+														input(type="hidden" name="task_id" value=`${task._id}`)
+														button(type="submit" class="check-button" id=`${task._id}` data=`${task._id}`)
+												td(class="borderless col-xs-7" id=`taskName_${task._id}`) #{task.taskName}
+												td(class="borderless col-xs-3" id=`isDue_${task._id}`) #{task.isDue}
+												td(class="borderless col-xs-1")
+													a(class="edit-toggle" id=`${task._id}`) edit
+									li(class="task-item-edit list-group-item" id=`form_${task._id}`)
+										form(class="form form-inline edit-task-form" action="#" method="POST")
+											input(type="hidden" name="user_id" value=`${currentUser._id}`)
+											input(type="hidden" name="list_id" value=`${list._id}`)
+											input(type="hidden" name="task_id" value=`${task._id}`)
+											input(type="text" name="taskName" value=`${task.taskName}`)
 											input(type="date" name="isDue" value=`${task.isDue}`)
-										button(type="submit" class="btn btn-default") edit task
-									form(class="form form-inline delete-task-form" action=`/users/${currentUser._id}/tasks/${task._id}?_method=DELETE` method="POST")
-										button(type="submit" class="btn btn-danger") delete task
-									a(class="cancel-toggle pull-right" id=`${task._id}`) cancel edit
-		
-					a(class="add-toggle") add task
+											button(type="submit" class="btn btn-default") edit task
+										form(class="form form-inline delete-task-form" action="#" method="POST")
+											input(type="hidden" name="user_id" value=`${currentUser._id}`)
+											input(type="hidden" name="list_id" value=`${list._id}`)
+											input(type="hidden" name="task_id" value=`${task._id}`)
+											button(type="submit" class="btn btn-danger") delete task
+										a(class="cancel-toggle pull-right" id=`${task._id}`) cancel edit
+						div(class="add-tasks-form-container")
+							form(class="form form-inline add-tasks-form" action="#" method="POST" id=`add_form_${list._id}`)
+								input(type="hidden" name="user_id" value=`${currentUser._id}`)
+								input(type="hidden" name="list_id" value=`${list._id}`)
+								input(type="text" name="taskName" placeholder="insert task")
+								input(type="date" name="isDue")
+								button(type="submit" class="btn btn-default btn-xs") add task
+							div
+								a(class="add-task-toggle" id=`form_${list._id}`) add task
 
-					form(class="form form-inline add-task-form" action=`/users/${currentUser._id}/tasks/new` method="POST")
-						div(class="form-group")
-							input(type="text" name="task" placeholder="insert task here")
-						div(class="form-group")
-							input(type="date" name="isDue")
-						button(type="submit" class="btn btn-default") add task
-						a(class="cancel-add-toggle") cancel
+
+
+					
 
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js")
+	script(type="text/x-handlebars-template" id="add_task_template")
+		li(class="list-group-item") 
+			table(class="table borderless")
+				tr
+					td(class="borderless col-xs-1")
+						form(class="form form-inline complete-task-form")
+							input(type="hidden" name="user_id" value="{{user_id}}")
+							input(type="hidden" name="list_id" value="{{list_id}}")
+							input(type="hidden" name="task_id" value="{{task_id}}")
+							button(type="submit" class="check-button" id="{{task_id}}")
+					td(class="borderless col-xs-7") {{task_taskName}}
+					td(class="borderless col-xs-3") {{task_isDue}}
+					td(class="borderless col-xs-1")
+						a(class="edit-toggle" id="{{task_id}}") edit
+		li(class="task-item-edit list-group-item" id=`form_{{task_id}}`)
+			form(class="form form-inline edit-task-form" action="#" method="POST")
+				input(type="hidden" name="user_id" value="{{user_id}}")
+				input(type="hidden" name="list_id" value="{{list_id}}")
+				input(type="hidden" name="task_id" value="{{task_id}}")
+				input(type="text" name="taskName" value="{{task_taskName}}")
+				input(type="date" name="isDue" value="{{task_isDue}}")
+				button(type="submit" class="btn btn-default") edit task
+			form(class="form form-inline delete-task-form" action="#" method="POST")
+				input(type="hidden" name="user_id" value="{{user_id}}")
+				input(type="hidden" name="list_id" value="{{list_id}}")
+				input(type="hidden" name="task_id" value="{{task_id}}")
+				button(type="submit" class="btn btn-danger") delete task
+			a(class="cancel-toggle pull-right" id="{{task_id}}") cancel edit
 	script(src="/js/style.js")

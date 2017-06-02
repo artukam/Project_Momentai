@@ -5,9 +5,18 @@ var authMiddleware = require('../middleware/auth');
 
 //INDEX/NEW/SHOW
 router.get('/', authMiddleware.loginRequired, function(req,res,next) {
-	db.User.findOne({_id: req.session.passport.user}).populate('tasks lists').exec().then(function(user) {
-		let currentUser = user;
-		res.render('task_home',{currentUser});
+	db.User.findOne({_id: req.session.passport.user})
+		.populate({
+			path:'lists',
+			model:'List',
+			populate: {
+				path:'tasks',
+				model:'Task',
+			}
+		})
+		.exec().then(function(user) {
+			let currentUser = user;
+			res.render('task_home',{currentUser});
 	})
 })
 
