@@ -14,7 +14,7 @@ input{
 	background-color:#257F7E;
 	padding-top:20px;
 	padding-bottom:20px;
-	min-height:10vh;
+	min-height:5vh;
 }
 
 .navbar-momentai .navbar-toggle .icon-bar {
@@ -33,7 +33,7 @@ input{
 
 .footer-row{
 	background-color:#257F7E;
-	min-height:5vh;
+	min-height:10vh;
 }
 
 .head-tag-line, .footer-text{

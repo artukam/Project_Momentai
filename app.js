@@ -12,8 +12,10 @@ var session = require('cookie-session');
 var fs = require('fs');
 var flash = require('connect-flash');
 var passport = require('passport');
+var favicon = require('serve-favicon');
 
 app.set('view engine', 'pug');
+
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -22,6 +24,7 @@ app.use(session({secret:process.env.SECRET_KEY}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 app.get('/', function(req,res) {
 	res.redirect('/users/login');
