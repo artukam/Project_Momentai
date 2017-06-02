@@ -88,14 +88,14 @@ body
 												button(type="submit" class="btn btn-danger") delete task
 											a(class="cancel-task-toggle pull-right" id=`${task._id}`) cancel edit
 							div(class="add-tasks-form-container")
-								form(class="form form-inline add-tasks-form" action="#" method="POST" id=`add_form_${list._id}`)
+								form(class="form form-inline add-tasks-form" action="#" method="POST" id=`form_add_task_${list._id}`)
 									input(type="hidden" name="user_id" value=`${currentUser._id}`)
 									input(type="hidden" name="list_id" value=`${list._id}`)
 									input(type="text" name="taskName" placeholder="insert task")
 									input(type="date" name="isDue")
 									button(type="submit" class="btn btn-default btn-xs") add task
 								div
-									a(class="add-task-toggle" id=`form_${list._id}`) add task
+									a(class="add-task-toggle" id=`add_task_${list._id}`) add task
 
 
 
@@ -125,16 +125,16 @@ body
 				small {{list_listName}}
 			ul(class="list-group todo-task-group" id=`tasklist_{{list_id}}`)
 			div(class="add-tasks-form-container")
-				form(class="form form-inline add-tasks-form" action="#" method="POST" id=`add_form_{{list_id}}`)
+				form(class="form form-inline add-tasks-form" action="#" method="POST" id=`form_add_task_{{list_id}}`)
 					input(type="hidden" name="user_id" value="{{user_id}}")
 					input(type="hidden" name="list_id" value="{{list_id}}")
 					input(type="text" name="taskName" placeholder="insert task")
 					input(type="date" name="isDue")
 					button(type="submit" class="btn btn-default btn-xs") add task
 				div
-					a(class="add-task-toggle" id=`form_{{list_id}}`) add task
+					a(class="add-task-toggle" id=`add_task_{{list_id}}`) add task
 	script(type="text/x-handlebars-template" id="add_task_template")
-		li(class="list-group-item") 
+		li(class="list-group-item" id=`task_item_{{task_id}}`) 
 			table(class="table borderless")
 				tr
 					td(class="borderless col-xs-1")
@@ -143,8 +143,8 @@ body
 							input(type="hidden" name="list_id" value="{{list_id}}")
 							input(type="hidden" name="task_id" value="{{task_id}}")
 							button(type="submit" class="check-button" id="{{task_id}}")
-					td(class="borderless col-xs-7") {{task_taskName}}
-					td(class="borderless col-xs-3") {{task_isDue}}
+					td(class="borderless col-xs-7" id=`taskName_{{task_id}}`) {{task_taskName}}
+					td(class="borderless col-xs-3" id=`isDue_{{task_id}}`) {{task_isDue}}
 					td(class="borderless col-xs-1")
 						a(class="edit-task-toggle" id="{{task_id}}") edit
 		li(class="task-item-edit list-group-item" id=`form_{{task_id}}`)
