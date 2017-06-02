@@ -67,10 +67,15 @@ router.post('/signup', function(req,res,next){
 router.post('/login',
 			passport.authenticate('local', {successRedirect: '/users/index' , failureRedirect: '/users/login'}));
 
-//LOGOUT USER
+//LOGOUT USER - from task page
+router.get('/logout', function(req,res,next){
+	req.logout();
+	res.redirect('/users/login');
+})
+
+//LOGOUT USER - from user page
 router.post('/logout', function(req,res,next){
 	req.logout();
-	req.flash('message', 'logged out!');
 	res.redirect('/users/login');
 })
 

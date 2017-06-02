@@ -22,6 +22,10 @@ input{
 	color:white;
 }
 
+.btn-momentai{
+	background-color:#257F7E;
+}
+
 .task-side-bar {
 	min-height:100vh;
 	background-color:#257F7E;

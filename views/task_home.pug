@@ -13,16 +13,23 @@ body
 				div
 					img(class="img-responsive center-image" src="/img/dummy_thumbnail.png")
 				div(class="text-center")
-					h4(class="text-center")
-						small(class="label-greeting") Welcome back, #{currentUser.username}
-					a(class="text-center label-greeting" href=`/users/${currentUser._id}`) (user settings)
+					div(class="dropdown")
+						button(class="btn btn-momentai dropdown-toggle" type="button" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true")
+							span(class="label-greeting") #{currentUser.username}
+							span(class="caret")
+						ul(class="dropdown-menu" aria-labelledby="dropdownUserMenu")
+							li
+								a(href=`/users/${currentUser._id}`) user settings
+							li
+								a(href=`/users/logout`) log out
 				hr
 				div(class="user-lists")
 					h4
 						small(class="label-greeting") To-do lists
 					ul(class="list-group todo-list-group" id="to-do-list")
 						for list in currentUser.lists
-							li(class="list-group-item to-do-list-li" id=`list_${list._id}`) #{list.listName}
+							li(class="list-group-item to-do-list-li" id=`list_${list._id}`) 
+								span(id=`list_name_${list._id}`) #{list.listName}
 								a(class="edit-list-form-toggle pull-right" id=`${list._id}`) (edit)
 							li(class="list-group-item to-do-list-edit to-do-list-li" id=`form_${list._id}`)
 								form(class="form form-inline edit-list-form" action="#" method="POST")
@@ -98,7 +105,8 @@ body
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js")
 	script(type="text/x-handlebars-template" id="add_list_template")
-		li(class="list-group-item to-do-list-li" id=`list_{{list_id}}`) {{list_listName}}
+		li(class="list-group-item to-do-list-li" id=`list_{{list_id}}`)
+			span(id=`list_name_{{list_id}}`) {{list_listName}}
 			a(class="edit-list-form-toggle pull-right" id="{{list_id}}") (edit)
 		li(class="list-group-item to-do-list-edit to-do-list-li" id=`form_{{list_id}}`)
 			form(class="form form-inline edit-list-form" action="#" method="POST")

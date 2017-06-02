@@ -81,11 +81,12 @@ window.onload = function() {
 			data: {listName: listValue},
 		}).then(function(res){
 			console.log("list name edited")
-			let listText = $(`#list_${listId}`);
+			let listText = $(`#list_name_${listId}`);
+			let listBox = $(`#list_${listId}`);
 			let listForm = $(`#form_${listId}`);
 			listText.text(`${listValue}`)
 			listForm.toggle();
-			listText.toggle();
+			listBox.toggle();
 		})
 	})
 	//List - delete list
