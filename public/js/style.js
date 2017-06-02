@@ -14,6 +14,8 @@ window.onload = function() {
 	let editTaskForm = $(".edit-task-form");
 	let deleteTaskForm = $(".delete-task-form");
 	let completeTaskForm = $(".complete-task-form");
+	let editTaskToggle = $(".edit-task-toggle");
+	let cancelTaskToggle = $(".cancel-task-toggle")
 
 	//Lists
 	//List - hide and show add list form and buttons
@@ -26,7 +28,7 @@ window.onload = function() {
 		addListToggle.toggle();
 		addListForm.toggle();
 	})
-	//List - AJAX request for creating new task
+	//List - AJAX request for creating new list
 	addListForm.on("submit", function(event) {
 		event.preventDefault();
 		let userId = $(event.target)[0].children.user_id.value;
@@ -36,12 +38,21 @@ window.onload = function() {
 			url:`/users/${userId}/lists/new`,
 			data: {listName: listValue},
 		}).then(function(res){
-			console.log("List added")
-			let $li = $("<li>", {
-				class: "list-group-item to-do-list-li",
-				text: listValue
-			})
-			todoListGroup.append($li);
+			let sourceOne = $("#add_list_template").html();
+			let sourceTwo = $("#add_macro_list_template").html();
+			let templateOne = Handlebars.compile(sourceOne);
+			let templateTwo = Handlebars.compile(sourceTwo);
+			let context = {
+				user_id: userId,
+				list_id: res,
+				list_listName: listValue,
+			}
+			let htmlOne = templateOne(context);
+			let htmlTwo = templateTwo(context);
+			let appendDivOne = $("#to-do-list")
+			let appendDivTwo = $("#to-do-task-list")
+			appendDivOne.append(htmlOne);
+			appendDivTwo.append(htmlTwo);
 			addListForm.trigger("reset");
 			addListToggle.toggle();
 			addListForm.toggle();
@@ -89,8 +100,10 @@ window.onload = function() {
 			console.log("list deleted")
 			let listForm = $(`#form_${listId}`)
 			let listText = $(`#list_${listId}`)
+			let listDiv = $(`#holding_div_${listId}`)
 			listForm.remove();
 			listText.remove();
+			listDiv.remove();
 		})
 	})
 
@@ -110,6 +123,23 @@ window.onload = function() {
 
 	})
 
+	//Task edit toggle show form hide item
+	editTaskToggle.on("click", function(event) {
+		let taskId = $(event.target)[0].id;
+		let taskItem = $(`#task_item_${taskId}`);
+		let taskForm = $(`#form_${taskId}`);
+		taskItem.toggle();
+		taskForm.toggle();
+	})
+
+	//Task edit toggle hide form show item
+	cancelTaskToggle.on("click", function(event) {
+		let taskId = $(event.target)[0].id;
+		let taskItem = $(`#task_item_${taskId}`);
+		let taskForm = $(`#form_${taskId}`);
+		taskItem.toggle();
+		taskForm.toggle();
+	})
 	//Task - AJAX - request to make new task for a given list
 	addTaskForm.on("submit", function(event) {
 		event.preventDefault();
@@ -127,18 +157,17 @@ window.onload = function() {
 				list: listId
 			}
 		}).then(function(res){
-			console.log("task added")
 			let source = $("#add_task_template").html();
 			let template = Handlebars.compile(source);
-			var context = {
+			let context = {
 				user_id: userId,
 				list_id: listId,
-				task_id: "12345",
+				task_id: res,
 				task_taskName: taskText,
 				task_isDue: dateValue
 			}
-			var html = template(context);
-			var appendDiv = $(`#tasklist_${listId}`)
+			let html = template(context);
+			let appendDiv = $(`#tasklist_${listId}`)
 			appendDiv.append(html);
 			addTaskForm.trigger("reset");
 		})
@@ -162,8 +191,12 @@ window.onload = function() {
 		}).then(function(res) {
 			let updateTaskText = $(`#taskName_${taskId}`)
 			let updateTaskDate = $(`#isDue_${taskId}`)
+			let taskItem = $(`#task_item_${taskId}`);
+			let taskForm = $(`#form_${taskId}`);
 			updateTaskText.text(taskText);
 			updateTaskDate.text(dateValue);
+			taskItem.toggle();
+			taskForm.toggle();
 		})
 	})
 
@@ -195,8 +228,6 @@ window.onload = function() {
 			type:"PATCH",
 			url:`/users/${userId}/lists/${listId}/tasks/${taskId}/complete`,
 		}).then(function(res){
-			console.log("task completed");
-			console.log(res);
 			let taskItem = $(`#task_item_${taskId}`);
 			let taskForm = $(`#form_${taskId}`);
 			taskItem.remove();

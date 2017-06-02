@@ -28,7 +28,7 @@ router.post('/new', function(req, res, next){
 		newList.save().then(function(createdList){
 			user.lists.push(createdList._id)
 			user.save().then(function(){
-				res.sendStatus(200);
+				res.send(createdList._id);
 			})
 		})
 	})

@@ -20,7 +20,7 @@ body
 				div(class="user-lists")
 					h4
 						small(class="label-greeting") To-do lists
-					ul(class="list-group todo-list-group")
+					ul(class="list-group todo-list-group" id="to-do-list")
 						for list in currentUser.lists
 							li(class="list-group-item to-do-list-li" id=`list_${list._id}`) #{list.listName}
 								a(class="edit-list-form-toggle pull-right" id=`${list._id}`) (edit)
@@ -44,50 +44,51 @@ body
 						input(type="hidden" name="user_id" value=`${currentUser._id}`)
 						button(type="submit" class="btn btn-default btn-xs") add list
 						button(type="button" class="btn btn-danger cancel-add-list-toggle btn-xs") cancel
-			div(class='col-xs-6 col-xs-offset-1 main-task-area')
+			div(class='col-xs-6 col-xs-offset-1 main-task-area' id="to-do-task-list")
 					for list in currentUser.lists
-						h2
-							small #{list.listName}
-						//- tasks for each list
-						ul(class="list-group todo-task-group" id=`tasklist_${list._id}`)
-							for task in list.tasks
-								if task.isActive
-									li(class="task-item list-group-item" id=`task_item_${task._id}`) 
-										table(class="table borderless")
-											tr
-												td(class="borderless col-xs-1")
-													form(class="form form-inline complete-task-form")
-														input(type="hidden" name="user_id" value=`${currentUser._id}`)
-														input(type="hidden" name="list_id" value=`${list._id}`)
-														input(type="hidden" name="task_id" value=`${task._id}`)
-														button(type="submit" class="check-button" id=`${task._id}` data=`${task._id}`)
-												td(class="borderless col-xs-7" id=`taskName_${task._id}`) #{task.taskName}
-												td(class="borderless col-xs-3" id=`isDue_${task._id}`) #{task.isDue}
-												td(class="borderless col-xs-1")
-													a(class="edit-toggle" id=`${task._id}`) edit
-									li(class="task-item-edit list-group-item" id=`form_${task._id}`)
-										form(class="form form-inline edit-task-form" action="#" method="POST")
-											input(type="hidden" name="user_id" value=`${currentUser._id}`)
-											input(type="hidden" name="list_id" value=`${list._id}`)
-											input(type="hidden" name="task_id" value=`${task._id}`)
-											input(type="text" name="taskName" value=`${task.taskName}`)
-											input(type="date" name="isDue" value=`${task.isDue}`)
-											button(type="submit" class="btn btn-default") edit task
-										form(class="form form-inline delete-task-form" action="#" method="POST")
-											input(type="hidden" name="user_id" value=`${currentUser._id}`)
-											input(type="hidden" name="list_id" value=`${list._id}`)
-											input(type="hidden" name="task_id" value=`${task._id}`)
-											button(type="submit" class="btn btn-danger") delete task
-										a(class="cancel-toggle pull-right" id=`${task._id}`) cancel edit
-						div(class="add-tasks-form-container")
-							form(class="form form-inline add-tasks-form" action="#" method="POST" id=`add_form_${list._id}`)
-								input(type="hidden" name="user_id" value=`${currentUser._id}`)
-								input(type="hidden" name="list_id" value=`${list._id}`)
-								input(type="text" name="taskName" placeholder="insert task")
-								input(type="date" name="isDue")
-								button(type="submit" class="btn btn-default btn-xs") add task
-							div
-								a(class="add-task-toggle" id=`form_${list._id}`) add task
+						div(id=`holding_div_${list._id}`)
+							h2
+								small #{list.listName}
+							//- tasks for each list
+							ul(class="list-group todo-task-group" id=`tasklist_${list._id}`)
+								for task in list.tasks
+									if task.isActive
+										li(class="task-item list-group-item" id=`task_item_${task._id}`) 
+											table(class="table borderless")
+												tr
+													td(class="borderless col-xs-1")
+														form(class="form form-inline complete-task-form")
+															input(type="hidden" name="user_id" value=`${currentUser._id}`)
+															input(type="hidden" name="list_id" value=`${list._id}`)
+															input(type="hidden" name="task_id" value=`${task._id}`)
+															button(type="submit" class="check-button" id=`${task._id}` data=`${task._id}`)
+													td(class="borderless col-xs-7" id=`taskName_${task._id}`) #{task.taskName}
+													td(class="borderless col-xs-3" id=`isDue_${task._id}`) #{task.isDue}
+													td(class="borderless col-xs-1")
+														a(class="edit-task-toggle" id=`${task._id}`) edit
+										li(class="task-item-edit list-group-item" id=`form_${task._id}`)
+											form(class="form form-inline edit-task-form" action="#" method="POST")
+												input(type="hidden" name="user_id" value=`${currentUser._id}`)
+												input(type="hidden" name="list_id" value=`${list._id}`)
+												input(type="hidden" name="task_id" value=`${task._id}`)
+												input(type="text" name="taskName" value=`${task.taskName}`)
+												input(type="date" name="isDue" value=`${task.isDue}`)
+												button(type="submit" class="btn btn-default") edit task
+											form(class="form form-inline delete-task-form" action="#" method="POST")
+												input(type="hidden" name="user_id" value=`${currentUser._id}`)
+												input(type="hidden" name="list_id" value=`${list._id}`)
+												input(type="hidden" name="task_id" value=`${task._id}`)
+												button(type="submit" class="btn btn-danger") delete task
+											a(class="cancel-task-toggle pull-right" id=`${task._id}`) cancel edit
+							div(class="add-tasks-form-container")
+								form(class="form form-inline add-tasks-form" action="#" method="POST" id=`add_form_${list._id}`)
+									input(type="hidden" name="user_id" value=`${currentUser._id}`)
+									input(type="hidden" name="list_id" value=`${list._id}`)
+									input(type="text" name="taskName" placeholder="insert task")
+									input(type="date" name="isDue")
+									button(type="submit" class="btn btn-default btn-xs") add task
+								div
+									a(class="add-task-toggle" id=`form_${list._id}`) add task
 
 
 
@@ -96,6 +97,34 @@ body
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js")
+	script(type="text/x-handlebars-template" id="add_list_template")
+		li(class="list-group-item to-do-list-li" id=`list_{{list_id}}`) {{list_listName}}
+			a(class="edit-list-form-toggle pull-right" id="{{list_id}}") (edit)
+		li(class="list-group-item to-do-list-edit to-do-list-li" id=`form_{{list_id}}`)
+			form(class="form form-inline edit-list-form" action="#" method="POST")
+				input(type="text" name="listName" value="{{list_listName}}")
+				input(type="hidden" name="user_id" value="{{user_id}}")
+				input(type="hidden" name="list_id" value="{{list_id}}")
+				button(type="submit" class="btn btn-default btn-xs") edit list
+			form(class="form form-inline delete-list-form" action="#" method="POST")
+				input(type="hidden" name="user_id" value="{{user_id}}")
+				input(type="hidden" name="list_id" value="{{list_id}}")
+				button(type="submit" class="btn btn-danger btn-xs") delete list
+			a(class="edit-list-form-toggle pull-right" id="{{list_id}}") (cancel)
+	script(type="text/x-handlebars-template" id="add_macro_list_template")
+		div(id=`holding_div_{{list_id}}`)
+			h2
+				small {{list_listName}}
+			ul(class="list-group todo-task-group" id=`tasklist_{{list_id}}`)
+			div(class="add-tasks-form-container")
+				form(class="form form-inline add-tasks-form" action="#" method="POST" id=`add_form_{{list_id}}`)
+					input(type="hidden" name="user_id" value="{{user_id}}")
+					input(type="hidden" name="list_id" value="{{list_id}}")
+					input(type="text" name="taskName" placeholder="insert task")
+					input(type="date" name="isDue")
+					button(type="submit" class="btn btn-default btn-xs") add task
+				div
+					a(class="add-task-toggle" id=`form_{{list_id}}`) add task
 	script(type="text/x-handlebars-template" id="add_task_template")
 		li(class="list-group-item") 
 			table(class="table borderless")
@@ -109,7 +138,7 @@ body
 					td(class="borderless col-xs-7") {{task_taskName}}
 					td(class="borderless col-xs-3") {{task_isDue}}
 					td(class="borderless col-xs-1")
-						a(class="edit-toggle" id="{{task_id}}") edit
+						a(class="edit-task-toggle" id="{{task_id}}") edit
 		li(class="task-item-edit list-group-item" id=`form_{{task_id}}`)
 			form(class="form form-inline edit-task-form" action="#" method="POST")
 				input(type="hidden" name="user_id" value="{{user_id}}")
@@ -123,5 +152,5 @@ body
 				input(type="hidden" name="list_id" value="{{list_id}}")
 				input(type="hidden" name="task_id" value="{{task_id}}")
 				button(type="submit" class="btn btn-danger") delete task
-			a(class="cancel-toggle pull-right" id="{{task_id}}") cancel edit
+			a(class="cancel-task-toggle pull-right" id="{{task_id}}") cancel edit
 	script(src="/js/style.js")

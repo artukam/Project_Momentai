@@ -38,7 +38,7 @@ input{
 }
 
 .task-item-edit{
-	display:show;
+	display:none;
 	list-style:none;
 }
 
@@ -54,11 +54,11 @@ input{
 .task-item-edit .list-group-item button{
 	display:inline;
 }
-.edit-toggle{
+.edit-task-toggle{
 	cursor:pointer;
 }
 
-.cancel-toggle{
+.cancel-task-toggle{
 	cursor:pointer;
 }
 

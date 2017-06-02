@@ -12,7 +12,7 @@ router.post('/new', function(req,res,next){
 		newTask.save().then(function(createdTask){
 			list.tasks.push(createdTask._id)
 			list.save().then(function(){
-				res.sendStatus(200);
+				res.send(createdTask._id);
 			})
 		})
 	})
