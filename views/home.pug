@@ -6,6 +6,8 @@ head
 	link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous")
 	link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous")
 	link(rel="stylesheet" href="/css/style.css")
+	link(rel="icon" type="image/png" href="/img/momentai_favicon.png")
+	link(rel="shortcut icon" type="image/png" href="/img/momentai_favicon.png")
 body
 	if(message)
 		p #{message}
@@ -31,7 +33,7 @@ body
 						button(type="submit" class="btn btn-default" class="form-control") Log in
 	div(class="container-fluid")
 		div(class="row parallax")
-			div(class="col-xs-4 col-xs-offset-1")
+			div(class="col-xs-12 col-sm-4 col-sm-offset-1")
 				h1(class="head-tag-line") 
 					span Keep track of the things that 
 					span(class="emphasis-word") matter.
@@ -44,6 +46,9 @@ body
 					div(class="form-group")
 						input(type="password" name="password" class="form-control" placeholder="password")
 					button(type="submit" class="btn btn-default") Sign up
+		div(class="row footer-row")
+			div(class="col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-5 footer-text")
+				p © 2017 Momentai | All Rights Reserved
 
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous")

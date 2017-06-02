@@ -14,23 +14,29 @@ input{
 	background-color:#257F7E;
 	padding-top:20px;
 	padding-bottom:20px;
+	min-height:10vh;
 }
 
 .navbar-momentai .navbar-toggle .icon-bar {
-    background-color:white;
+	background-color:white;
 }
 
 .parallax { 
-	    padding-top:100px;
-	    background-image: url("/img/desk_bg.jpg");
-	    height: 800px; 
-	    background-attachment: fixed;
-	    background-position: center;
-	    background-repeat: no-repeat;
-	    background-size: cover;
+	padding-top:100px;
+	background-image: url("/img/desk_bg.jpg");
+	min-height: 85vh; 
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
-.head-tag-line{
+.footer-row{
+	background-color:#257F7E;
+	min-height:5vh;
+}
+
+.head-tag-line, .footer-text{
 	color:white;
 }
 
@@ -60,8 +66,8 @@ input{
 }
 
 .borderless td, .borderless th, .table>tbody>tr>td {
-    border: none;
-    border-top: none;
+	border: none;
+	border-top: none;
 }
 
 .task-item{
