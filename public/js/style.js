@@ -61,16 +61,6 @@ window.onload = function() {
 		})
 	})
 
-	//List - hide and show edit list form and buttons
-/*	editListToggle.on("click", function(event) {
-		event.preventDefault();
-		let listId = $(event.target)[0].id;
-		let listForm = $(`#form_${listId}`);
-		let listText = $(`#list_${listId}`);
-		listForm.toggle();
-		listText.toggle();
-	})*/
-
 	//GLOBAL - List - hide and show edit list form and buttons
 	todoListGroup.on("click",".edit-list-form-toggle",function(event) {
 		event.preventDefault();
@@ -81,27 +71,6 @@ window.onload = function() {
 		listForm.toggle();
 		listText.toggle();
 	})
-
-	//List -edit list
-/*	editListForm.on("submit", function(event) {
-		event.preventDefault();
-		let userId = $(event.target)[0].children.user_id.value;
-		let listValue = $(event.target)[0].children.listName.value;
-		let listId = $(event.target)[0].children.list_id.value;
-		$.ajax({
-			type:"PATCH",
-			url: `/users/${userId}/lists/${listId}`,
-			data: {listName: listValue},
-		}).then(function(res){
-			console.log("list name edited")
-			let listText = $(`#list_name_${listId}`);
-			let listBox = $(`#list_${listId}`);
-			let listForm = $(`#form_${listId}`);
-			listText.text(`${listValue}`)
-			listForm.toggle();
-			listBox.toggle();
-		})
-	})*/
 
 	//GLOBAL - List - edit list
 	todoListGroup.on("submit",".edit-list-form", function(event) {
@@ -124,25 +93,6 @@ window.onload = function() {
 		})
 	})
 
-	//List - delete list
-/*	deleteListForm.on("submit", function(event) {
-		event.preventDefault();
-		let userId = $(event.target)[0].children.user_id.value;
-		let listId = $(event.target)[0].children.list_id.value;
-		$.ajax({
-			type:"DELETE",
-			url:`/users/${userId}/lists/${listId}`,
-		}).then(function(res) {
-			console.log("list deleted")
-			let listForm = $(`#form_${listId}`)
-			let listText = $(`#list_${listId}`)
-			let listDiv = $(`#holding_div_${listId}`)
-			listForm.remove();
-			listText.remove();
-			listDiv.remove();
-		})
-	})*/
-
 	//GLOBAL - LIST - delete list
 	todoListGroup.on("submit", ".delete-list-form", function(event) {
 		event.preventDefault();
@@ -162,20 +112,6 @@ window.onload = function() {
 		})
 	})
 
-	//Tasks
-	//Task hide/show
-/*	addTaskToggle.on("click", function(event) {
-		let toggleText = $(event.target).text();
-		if (toggleText === "add task") {
-			$(event.target).text("cancel")
-		} else {
-			$(event.target).text("add task")
-		}
-		let formId = $(event.target)[0].id
-		let taskForm = $(`#add_${formId}`)
-		taskForm.toggle();
-
-	})*/
 	//GLOBAL - Task hide/show
 	mainTaskArea.on("click",".add-task-toggle",function(event) {
 		let toggleText = $(event.target).text();
@@ -189,14 +125,6 @@ window.onload = function() {
 		taskForm.toggle();
 	})
 
-	//Task edit toggle show form hide item
-/*	editTaskToggle.on("click", function(event) {
-		let taskId = $(event.target)[0].id;
-		let taskItem = $(`#task_item_${taskId}`);
-		let taskForm = $(`#form_${taskId}`);
-		taskItem.toggle();
-		taskForm.toggle();
-	})*/
 	//GLOBAL - Task edit toggle show form hide item
 	mainTaskArea.on("click",".edit-task-toggle", function(event) {
 		let taskId = $(event.target)[0].id;
@@ -206,14 +134,6 @@ window.onload = function() {
 		taskForm.toggle();
 	})
 
-/*	//Task edit toggle hide form show item
-	cancelTaskToggle.on("click", function(event) {
-		let taskId = $(event.target)[0].id;
-		let taskItem = $(`#task_item_${taskId}`);
-		let taskForm = $(`#form_${taskId}`);
-		taskItem.toggle();
-		taskForm.toggle();
-	})*/
 	//GLOBAL - Task edit toggle hide form show item
 	mainTaskArea.on("click",".cancel-task-toggle",function(event) {
 		let taskId = $(event.target)[0].id;
@@ -222,38 +142,6 @@ window.onload = function() {
 		taskItem.toggle();
 		taskForm.toggle();
 	})
-	//Task - AJAX - request to make new task for a given list
-/*	addTaskForm.on("submit", function(event) {
-		event.preventDefault();
-		let userId = $(event.target)[0].children.user_id.value;
-		let listId = $(event.target)[0].children.list_id.value;
-		let taskText = $(event.target)[0].children.taskName.value;
-		let dateValue = $(event.target)[0].children.isDue.value;
-		$.ajax({
-			type:"POST",
-			url:`/users/${userId}/lists/${listId}/tasks/new`,
-			data: {
-				taskName: taskText,
-				isDue: dateValue,
-				user: userId,
-				list: listId
-			}
-		}).then(function(res){
-			let source = $("#add_task_template").html();
-			let template = Handlebars.compile(source);
-			let context = {
-				user_id: userId,
-				list_id: listId,
-				task_id: res,
-				task_taskName: taskText,
-				task_isDue: dateValue
-			}
-			let html = template(context);
-			let appendDiv = $(`#tasklist_${listId}`)
-			appendDiv.append(html);
-			addTaskForm.trigger("reset");
-		})
-	})*/
 
 	//GLOBAL Task - AJAX - request to make new task for a given list
 	mainTaskArea.on("submit",".add-tasks-form",function(event) {
@@ -291,33 +179,6 @@ window.onload = function() {
 		})
 	})
 
-/*	//Task - AJAX = request to edit task for a given task item
-	editTaskForm.on("submit", function(event) {
-		event.preventDefault();
-		let userId = $(event.target)[0].children.user_id.value;
-		let listId = $(event.target)[0].children.list_id.value;
-		let taskId = $(event.target)[0].children.task_id.value;
-		let taskText = $(event.target)[0].children.taskName.value;
-		let dateValue = $(event.target)[0].children.isDue.value;
-		$.ajax({
-			type:"PATCH",
-			url:`/users/${userId}/lists/${listId}/tasks/${taskId}`,
-			data: {
-				taskName: taskText,
-				isDue: dateValue,
-			}
-		}).then(function(res) {
-			let updateTaskText = $(`#taskName_${taskId}`)
-			let updateTaskDate = $(`#isDue_${taskId}`)
-			let taskItem = $(`#task_item_${taskId}`);
-			let taskForm = $(`#form_${taskId}`);
-			updateTaskText.text(taskText);
-			updateTaskDate.text(dateValue);
-			taskItem.toggle();
-			taskForm.toggle();
-		})
-	})*/
-
 	//GLOBAL - Task - AJAX = request to edit task for a given task item
 	mainTaskArea.on("submit", ".edit-task-form", function(event) {
 		event.preventDefault();
@@ -345,23 +206,6 @@ window.onload = function() {
 		})
 	})
 
-	//Task - AJAX = request to delete task for a given task item
-/*	deleteTaskForm.on("submit", function(event) {
-		event.preventDefault();
-		let userId = $(event.target)[0].children.user_id.value;
-		let listId = $(event.target)[0].children.list_id.value;
-		let taskId = $(event.target)[0].children.task_id.value;
-		$.ajax({
-			type:"DELETE",
-			url:`/users/${userId}/lists/${listId}/tasks/${taskId}`,
-		}).then(function(res) {
-			let taskItem = $(`#task_item_${taskId}`);
-			let taskForm = $(`#form_${taskId}`);
-			taskItem.remove();
-			taskForm.remove();
-		})
-	})*/
-
 	//GLOBAL - AJAX = request to delete task for a given task item
 	mainTaskArea.on("submit",".delete-task-form", function(event) {
 		event.preventDefault();
@@ -379,23 +223,6 @@ window.onload = function() {
 		})
 	})
 
-/*	//Task - AJAX = request to complete task for a given task item
-	completeTaskForm.on("submit", function(event) {
-		event.preventDefault();
-		console.log("I have been clicked!");
-		let userId = $(event.target)[0].children.user_id.value;
-		let listId = $(event.target)[0].children.list_id.value;
-		let taskId = $(event.target)[0].children.task_id.value;
-		$.ajax({
-			type:"PATCH",
-			url:`/users/${userId}/lists/${listId}/tasks/${taskId}/complete`,
-		}).then(function(res){
-			let taskItem = $(`#task_item_${taskId}`);
-			let taskForm = $(`#form_${taskId}`);
-			taskItem.remove();
-			taskForm.remove();
-		})
-	})*/
 	//GLOBAL - AJAX = request to complete task for a given task item
 	mainTaskArea.on("submit",".complete-task-form", function(event){
 		event.preventDefault();
